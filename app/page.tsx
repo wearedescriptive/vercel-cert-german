@@ -1,9 +1,13 @@
-import { getBreakingNews } from "@/lib/data";
+import { BreakingNews } from "@/components/breaking-news";
+import { Suspense } from "react";
 
 export default async function Home() {
-  const [breakingNews] = await Promise.all([getBreakingNews()]);
-
-  console.log({ breakingNews });
-
-  return <main>main content!</main>;
+  return (
+    <div>
+      <Suspense fallback="loading...">
+        <BreakingNews />
+      </Suspense>
+      <main>main content!</main>
+    </div>
+  );
 }

@@ -64,8 +64,13 @@ export type ArticleListResponse = {
   success: true;
 };
 
-export type CategoryListResponse = {
+export type ArticleResponse = {
   data: Article;
+  success: true;
+};
+
+export type CategoryListResponse = {
+  data: Category[];
   success: true;
 };
 
