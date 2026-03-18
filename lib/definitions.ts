@@ -84,6 +84,8 @@ export type SubscriptionResponse = {
   success: true;
 };
 
+// export type PublicationConfigResponse = {};
+
 export type ErrorResponse = {
   error: {
     code: string;
