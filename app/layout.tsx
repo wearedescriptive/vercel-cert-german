@@ -1,35 +1,32 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { geistSans, geistMono } from "./fonts";
+
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { getPublicationConfig } from "@/lib/data";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export async function generateMetadata() {
+  "use cache";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  const config = await getPublicationConfig();
+  const seo = config.data.seo;
 
-export const metadata: Metadata = {
-  metadataBase: new URLSearchParams(process.env.VERCEL_URL)
-    ? `https://${process.env.VERCEL_URL}`
-    : `http://localhost:300`,
-  title: {
-    template: "%s | Vercel Daily News",
-    default: "Vercel Daily News",
-  },
-  description:
-    "Vercel Daily News is a daily news site that provides the latest news and updates from Vercel.",
-  openGraph: {
-    siteName: "Vercel Daily News",
-    locale: "en_US",
-    type: "website",
-  },
-};
+  return {
+    metadataBase: new URLSearchParams(process.env.VERCEL_URL)
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:300`,
+    title: {
+      template: seo.titleTemplate,
+      default: seo.defaultTitle,
+    },
+    description: seo.defaultDescription,
+    openGraph: {
+      siteName: seo.defaultTitle,
+      locale: "en_US",
+      type: "website",
+    },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -38,9 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
         <Header />
         {children}
         <Footer />

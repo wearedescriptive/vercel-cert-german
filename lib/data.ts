@@ -5,6 +5,8 @@ import type {
   ArticleResponse,
   BreakingNewsResponse,
   CategoryListResponse,
+  PublicationConfigResponse,
+  SubscriptionResponse,
 } from "./definitions";
 
 const BASE_URL = "https://vercel-daily-news-api.vercel.app/api";
@@ -18,7 +20,7 @@ export async function getFeaturedArticles() {
   cacheLife("days");
   cacheTag("featured-articles", "homepage");
 
-  const res = await fetch(`${BASE_URL}/articles?featured=true`, {
+  const res = await fetch(`${BASE_URL}/articles`, {
     headers: { ...bypassHeader },
   });
   if (!res.ok) throw new Error("Failed to get featured articles");
@@ -54,8 +56,24 @@ export async function getAllCategories() {
   return res.json() as Promise<CategoryListResponse>;
 }
 
-// TODO: can exclude
-export async function getTrendingArticles() {}
+export async function getTrendingArticles(exclude?: string) {
+  "use cache";
+
+  cacheLife("days");
+  if (exclude) {
+    cacheTag("trending-articles", `trending-articles-exluding-${exclude}`);
+  } else {
+    cacheTag("trending-articles");
+  }
+
+  const res = await fetch(
+    `${BASE_URL}/articles/trending${exclude ? `?exclude=${exclude}` : ""}`,
+    { headers: { ...bypassHeader } },
+  );
+  if (!res.ok) throw new Error("Failed to fetch trending articles");
+
+  return res.json() as Promise<ArticleListResponse>;
+}
 
 export async function getBreakingNews() {
   "use cache";
@@ -71,16 +89,51 @@ export async function getBreakingNews() {
   return res.json() as Promise<BreakingNewsResponse>;
 }
 
-// export async function getPublicationConfig() {
-//   "use cache";
+export async function getSubscription(token: string) {
+  const res = await fetch(`${BASE_URL}/subscription`, {
+    headers: { ...bypassHeader, "x-subscription-token": token },
+  });
+  if (!res.ok) return null;
 
-//   cacheLife("max");
-//   cacheTag("publication-config");
+  return res.json() as Promise<SubscriptionResponse>;
+}
 
-//   const res = await fetch(`${BASE_URL}/publication/config`, {
-//     headers: { ...bypassHeader },
-//   });
-//   if (!res.ok) throw new Error("Failed to get publication config");
+export async function activateSubscription(token: string) {
+  const res = await fetch(`${BASE_URL}/subscription`, {
+    method: "POST",
+    headers: { ...bypassHeader, "x-subscription-token": token },
+  });
+  if (!res.ok) throw new Error("Failed to activate subscription");
 
-//   return res.json() as Promise;
-// }
+  return res.json() as Promise<SubscriptionResponse>;
+}
+
+export async function cancelSubscription(token: string) {
+  const res = await fetch(`${BASE_URL}/subscription`, {
+    method: "DELETE",
+    headers: { ...bypassHeader, "x-subscription-token": token },
+  });
+  if (!res.ok) throw new Error("Failed to cancel subscription");
+
+  return res.json() as Promise<SubscriptionResponse>;
+}
+
+export async function createSubscription() {
+  const res = await fetch(`${BASE_URL}/subscription/create`, {
+    method: "POST",
+    headers: { ...bypassHeader },
+  });
+  if (!res.ok) throw new Error("Failed to create subscription");
+
+  const token = res.headers.get("x-subscription-token");
+  return { token, ...(await (res.json() as Promise<SubscriptionResponse>)) };
+}
+
+export async function getPublicationConfig() {
+  const res = await fetch(`${BASE_URL}/publication/config`, {
+    headers: { ...bypassHeader },
+  });
+  if (!res.ok) throw new Error("Failed to fetch publication config");
+
+  return res.json() as Promise<PublicationConfigResponse>;
+}

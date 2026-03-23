@@ -84,7 +84,30 @@ export type SubscriptionResponse = {
   success: true;
 };
 
-// export type PublicationConfigResponse = {};
+export type PublicationConfigResponse = {
+  data: {
+    publicationName: string;
+    language: string;
+    features: {
+      newsletter: boolean;
+      bookmarks: boolean;
+      comments: boolean;
+      darkMode: boolean;
+      searchSuggestions: boolean;
+    };
+    socialLinks: {
+      twitter: string;
+      github: string;
+      discord: string;
+    };
+    seo: {
+      defaultTitle: string;
+      titleTemplate: string;
+      defaultDescription: string;
+    };
+  };
+  success: true;
+};
 
 export type ErrorResponse = {
   error: {
