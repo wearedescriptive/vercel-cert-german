@@ -1,3 +1,6 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+
 import "./globals.css";
 import { geistSans, geistMono } from "./fonts";
 
@@ -36,6 +39,8 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
         <Header />
         {children}
+        <Analytics />
+        <SpeedInsights />
         <Footer />
       </body>
     </html>

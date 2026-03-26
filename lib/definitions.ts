@@ -60,7 +60,7 @@ export type PaginationMeta = {
 
 export type ArticleListResponse = {
   data: Article[];
-  meta: PaginationMeta;
+  meta: { pagination: PaginationMeta };
   success: true;
 };
 

@@ -127,7 +127,7 @@ async function ArticleContent({ params }: Props) {
   );
 }
 
-export default async function ArticleDetailsPage({ params }: Props) {
+export default async function ArticlePage({ params }: Props) {
   return (
     <main className="mx-auto max-w-4xl p-8">
       <div className="mx-auto max-w-5xl px-4 py-10">

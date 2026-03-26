@@ -78,9 +78,7 @@ export function SearchInputSkeleton() {
 }
 
 export function CategoryFilterSkeleton() {
-  return (
-    <div className="h-[42px] w-40 rounded-lg border bg-neutral-100" />
-  );
+  return <div className="h-[42px] w-40 rounded-lg border bg-neutral-100" />;
 }
 
 function SearchResultCardSkeleton() {

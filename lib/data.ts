@@ -20,7 +20,7 @@ export async function getFeaturedArticles() {
   cacheLife("days");
   cacheTag("featured-articles", "homepage");
 
-  const res = await fetch(`${BASE_URL}/articles`, {
+  const res = await fetch(`${BASE_URL}/articles?limit=6`, {
     headers: { ...bypassHeader },
   });
   if (!res.ok) throw new Error("Failed to get featured articles");
