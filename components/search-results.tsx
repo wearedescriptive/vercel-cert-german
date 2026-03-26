@@ -1,28 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { getFeaturedArticles } from "@/lib/data";
+import { searchArticles } from "@/lib/data";
 
-export async function FeaturedArticles() {
-  const { data: articles } = await getFeaturedArticles();
-  return (
-    <section className="mx-auto max-w-5xl px-4 pb-16">
-      <div className="mb-6 flex items-end justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Featured</h2>
-          <p className="text-sm text-neutral-500">
-            Handpicked stories from the team.
-          </p>
-        </div>
-        <Link
-          href="/search"
-          className="text-sm text-neutral-500 hover:text-neutral-900"
-        >
-          View all
-        </Link>
+export async function SearchResults(props: {
+  searchParams?: Promise<{ query?: string; category?: string; page?: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
+  const category = searchParams?.category || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const hasSearch = !!(query || category);
+
+  const { data: articles } = await searchArticles({
+    search: query,
+    category,
+    page: currentPage,
+    limit: 6,
+  });
+
+  if (hasSearch && articles.length === 0) {
+    return (
+      <div className="mt-12 text-center">
+        <p className="text-lg font-medium text-neutral-600">No results found</p>
+        <p className="mt-1 text-sm text-neutral-400">
+          Try a different search term or category.
+        </p>
       </div>
+    );
+  }
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  return (
+    <div className="mt-8">
+      {/* {!hasSearch && (
+        <p className="mb-4 text-sm text-neutral-500">Recent articles</p>
+      )} */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((article) => (
           <Link
             key={article.id}
@@ -49,12 +62,12 @@ export async function FeaturedArticles() {
             <h3 className="mt-1 font-bold text-neutral-900 group-hover:underline">
               {article.title}
             </h3>
-            <p className="mt-1 text-sm text-neutral-500 line-clamp-2">
+            <p className="mt-1 line-clamp-2 text-sm text-neutral-500">
               {article.excerpt}
             </p>
           </Link>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

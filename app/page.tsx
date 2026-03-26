@@ -3,18 +3,15 @@ import Link from "next/link";
 
 import { BreakingNews } from "@/components/breaking-news";
 import { FeaturedArticles } from "@/components/featured-articles";
-import { SubscribeButtonLoader } from "@/components/subscribe-button-loader";
-
-import { getFeaturedArticles } from "@/lib/data";
+import {
+  BreakingNewsSkeleton,
+  FeaturedArticlesSkeleton,
+} from "@/components/skeletons";
 
 export default async function Home() {
-  const [{ data: featuredArticles }] = await Promise.all([
-    getFeaturedArticles(),
-  ]);
-
   return (
     <>
-      <Suspense fallback="loading...">
+      <Suspense fallback={<BreakingNewsSkeleton />}>
         <BreakingNews />
       </Suspense>
 
@@ -39,13 +36,15 @@ export default async function Home() {
             Browse articles →
           </Link>
 
-          <Suspense>
+          {/* <Suspense>
             <SubscribeButtonLoader />
-          </Suspense>
+          </Suspense> */}
         </div>
-      </main>
 
-      <FeaturedArticles articles={featuredArticles} />
+        <Suspense fallback={<FeaturedArticlesSkeleton />}>
+          <FeaturedArticles />
+        </Suspense>
+      </main>
     </>
   );
 }

@@ -6,8 +6,6 @@ import { Footer } from "@/components/footer";
 import { getPublicationConfig } from "@/lib/data";
 
 export async function generateMetadata() {
-  "use cache";
-
   const config = await getPublicationConfig();
   const seo = config.data.seo;
 

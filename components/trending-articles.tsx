@@ -1,8 +1,14 @@
 import Link from "next/link";
 
-import type { Article } from "@/lib/definitions";
+import { getTrendingArticles } from "@/lib/data";
 
-export function TrendingArticles({ articles }: { articles: Article[] }) {
+export async function TrendingArticles({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const { data: articles } = await getTrendingArticles(id);
   return (
     <div>
       <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-neutral-400">

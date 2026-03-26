@@ -89,6 +89,31 @@ export async function getBreakingNews() {
   return res.json() as Promise<BreakingNewsResponse>;
 }
 
+export async function searchArticles(params: {
+  search?: string;
+  category?: string;
+  page?: number;
+  limit?: number;
+}) {
+  "use cache";
+
+  const qs = new URLSearchParams();
+  if (params.search) qs.set("search", params.search);
+  if (params.category) qs.set("category", params.category);
+  if (params.page) qs.set("page", String(params.page));
+  qs.set("limit", String(params.limit ?? 6));
+
+  cacheLife("days");
+  cacheTag("search-articles", `query-${qs.toString()}`);
+
+  const res = await fetch(`${BASE_URL}/articles?${qs.toString()}`, {
+    headers: { ...bypassHeader },
+  });
+  if (!res.ok) throw new Error("Failed to search articles");
+
+  return res.json() as Promise<ArticleListResponse>;
+}
+
 export async function getSubscription(token: string) {
   const res = await fetch(`${BASE_URL}/subscription`, {
     headers: { ...bypassHeader, "x-subscription-token": token },
@@ -129,7 +154,13 @@ export async function createSubscription() {
   return { token, ...(await (res.json() as Promise<SubscriptionResponse>)) };
 }
 
+// TODO: consider only returning what is needed for this function
 export async function getPublicationConfig() {
+  "use cache";
+
+  cacheLife("days");
+  cacheTag("publication-config");
+
   const res = await fetch(`${BASE_URL}/publication/config`, {
     headers: { ...bypassHeader },
   });
