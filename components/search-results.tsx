@@ -3,8 +3,6 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { searchArticles } from "@/lib/data";
-import { Suspense } from "react";
-import { SearchResultsSkeleton } from "./skeletons";
 import { Pagination } from "./pagination";
 
 export async function SearchResults(props: {
@@ -36,9 +34,9 @@ export async function SearchResults(props: {
 
   return (
     <>
-      <Suspense key={query + currentPage} fallback={<SearchResultsSkeleton />}>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {articles.map((article) => {
+          return (
             <Link
               key={article.id}
               href={`/articles/${article.id}`}
@@ -74,9 +72,9 @@ export async function SearchResults(props: {
                 </div>
               </div>
             </Link>
-          ))}
-        </div>
-      </Suspense>
+          );
+        })}
+      </div>
 
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

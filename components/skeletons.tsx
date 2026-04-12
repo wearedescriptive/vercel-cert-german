@@ -123,7 +123,7 @@ function FeaturedArticleCardSkeleton() {
 
 export function FeaturedArticlesSkeleton() {
   return (
-    <section className="mx-auto max-w-5xl px-4 pb-16">
+    <section className="w-full">
       <div className="mb-6 flex items-end justify-between">
         <div>
           <div className="h-7 w-32 rounded bg-neutral-200" />
@@ -133,6 +133,9 @@ export function FeaturedArticlesSkeleton() {
       </div>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <FeaturedArticleCardSkeleton />
+        <FeaturedArticleCardSkeleton />
+        <FeaturedArticleCardSkeleton />
         <FeaturedArticleCardSkeleton />
         <FeaturedArticleCardSkeleton />
         <FeaturedArticleCardSkeleton />

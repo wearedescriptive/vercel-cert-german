@@ -37,10 +37,6 @@ export default async function Home() {
             >
               Browse articles →
             </Link>
-
-            {/* <Suspense>
-            <SubscribeButtonLoader />
-          </Suspense> */}
           </div>
         </div>
 

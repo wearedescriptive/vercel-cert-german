@@ -7,7 +7,7 @@ import { getFeaturedArticles } from "@/lib/data";
 export async function FeaturedArticles() {
   const { data: articles } = await getFeaturedArticles();
   return (
-    <section>
+    <section className="w-full">
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h2 className="text-2xl font-bold">Featured</h2>
