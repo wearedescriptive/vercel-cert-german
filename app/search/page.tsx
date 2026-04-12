@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Suspense } from "react";
 
-import { getAllCategories } from "@/lib/data";
+import { getAllCategories } from "@/lib/api";
 import { Search } from "@/components/search";
 import { CategoryFilter } from "@/components/category-filter";
 import {

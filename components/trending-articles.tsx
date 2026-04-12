@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getTrendingArticles } from "@/lib/data";
+import { getTrendingArticles } from "@/lib/api";
 
 export async function TrendingArticles({
   params,

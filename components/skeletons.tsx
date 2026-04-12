@@ -72,7 +72,7 @@ export function TrendingArticlesSkeleton() {
 export function SearchInputSkeleton() {
   return (
     <div className="relative flex flex-1 shrink-0">
-      <div className="h-[38px] w-full rounded-md border border-gray-200 bg-neutral-100" />
+      <div className="h-[38px] w-full rounded-lg border border-gray-200 bg-neutral-100" />
     </div>
   );
 }

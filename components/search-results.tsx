@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { searchArticles } from "@/lib/data";
+import { searchArticles } from "@/lib/api";
 import { Pagination } from "./pagination";
 
 export async function SearchResults(props: {
@@ -35,7 +35,7 @@ export async function SearchResults(props: {
   return (
     <>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {articles.map((article) => {
+        {articles.map((article, index) => {
           return (
             <Link
               key={article.id}
@@ -49,6 +49,7 @@ export async function SearchResults(props: {
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  priority={index < 3}
                 />
               </div>
               <div className="p-4">

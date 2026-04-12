@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { SubscribeButtonLoader } from "./subscribe-button-loader";
 
 export async function Header() {
   return (
@@ -19,6 +21,9 @@ export async function Header() {
             Search
           </Link>
         </nav>
+        <Suspense>
+          <SubscribeButtonLoader />
+        </Suspense>
       </div>
     </header>
   );

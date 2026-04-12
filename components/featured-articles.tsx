@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { getFeaturedArticles } from "@/lib/data";
+import { getFeaturedArticles } from "@/lib/api";
 
 export async function FeaturedArticles() {
   const { data: articles } = await getFeaturedArticles();

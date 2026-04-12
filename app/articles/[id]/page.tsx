@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ArticleHero as Hero } from "@/components/article-hero";
 import { ArticleBody as Body } from "@/components/article-body";
 import { TrendingArticles } from "@/components/trending-articles";
 import { SubscribeButton } from "@/components/subscribe-button";
-import { getArticleById, getSubscription } from "@/lib/data";
+import { getArticleById } from "@/lib/api";
 import {
   ArticleContentSkeleton,
   TrendingArticlesSkeleton,
@@ -54,16 +54,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 async function ArticleContent({ params }: Props) {
-  const [{ id }, cookieStore] = await Promise.all([params, cookies()]);
-  const token = cookieStore.get("subscription-token")?.value;
-  const [{ data: article }, subscription] = await Promise.all([
-    getArticleById(id),
-    token ? getSubscription(token) : Promise.resolve(null),
-  ]);
+  const [{ id }, headerStore] = await Promise.all([params, headers()]);
+  const isSubscribed = headerStore.get("x-subscription-status") === "active";
+  const { data: article } = await getArticleById(id);
 
   if (!article) notFound();
-
-  const isSubscribed = subscription?.data?.status === "active";
 
   return (
     <article>

@@ -2,8 +2,19 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Dialog } from "radix-ui";
 import { subscribe, unsubscribe } from "@/app/actions";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
 
 type Props = {
   isSubscribed: boolean;
@@ -25,56 +36,71 @@ export function SubscribeButton({ isSubscribed }: Props) {
   function handleUnsubscribe() {
     startTransition(async () => {
       await unsubscribe();
+      setOpen(false);
       router.refresh();
     });
   }
 
   if (isSubscribed) {
     return (
-      <button
-        onClick={handleUnsubscribe}
-        disabled={isPending}
-        className="ml-auto rounded-full border px-4 py-1.5 text-sm font-semibold hover:bg-neutral-50 disabled:opacity-50"
-      >
-        {isPending ? "..." : "Unsubscribe"}
-      </button>
+      <div className="ml-auto flex items-center gap-2">
+        <Badge variant="secondary">Subscribed</Badge>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm">
+              Unsubscribe
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Unsubscribe from Vercel Daily</DialogTitle>
+              <DialogDescription>
+                You will lose access to full articles. You can always
+                re-subscribe later.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button
+                variant="destructive"
+                onClick={handleUnsubscribe}
+                disabled={isPending}
+              >
+                {isPending ? "Unsubscribing…" : "Unsubscribe"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     );
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>
-        <button className="ml-auto rounded-full border px-4 py-1.5 text-sm font-semibold hover:bg-neutral-50">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="ml-auto" size="sm">
           Subscribe
-        </button>
-      </Dialog.Trigger>
-
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
-          <Dialog.Title className="text-xl font-bold tracking-tight text-neutral-900">
-            Subscribe to Vercel Daily
-          </Dialog.Title>
-          <Dialog.Description className="mt-2 text-sm text-neutral-500">
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Subscribe to Vercel Daily</DialogTitle>
+          <DialogDescription>
             Get full access to all articles. No account required — your
             subscription persists in this browser.
-          </Dialog.Description>
-
-          <button
-            onClick={handleSubscribe}
-            disabled={isPending}
-            className="mt-6 w-full rounded-full bg-neutral-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-700 disabled:opacity-50"
-          >
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Maybe later</Button>
+          </DialogClose>
+          <Button onClick={handleSubscribe} disabled={isPending}>
             {isPending ? "Subscribing…" : "Subscribe — it's free"}
-          </button>
-
-          <Dialog.Close asChild>
-            <button className="mt-3 w-full rounded-full border px-4 py-2.5 text-sm font-semibold text-neutral-700 hover:bg-neutral-50">
-              Maybe later
-            </button>
-          </Dialog.Close>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

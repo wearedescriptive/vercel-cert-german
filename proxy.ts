@@ -1,7 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { withSubscriptionStatus } from "./lib/proxy/subscription";
 
-export function proxy() {
-  return NextResponse.next();
+export async function proxy(request: NextRequest) {
+  const headers = new Headers(request.headers);
+
+  await withSubscriptionStatus(request, headers);
+
+  return NextResponse.next({ request: { headers } });
 }
 
 export const config = {

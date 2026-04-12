@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { getSubscription } from "@/lib/data";
+import { getSubscription } from "@/lib/api";
 import { SubscribeButton } from "./subscribe-button";
 
 export async function SubscribeButtonLoader() {

@@ -33,7 +33,7 @@ export default async function Home() {
           <div>
             <Link
               href="/search"
-              className="rounded bg-black px-5 py-2.5 text-sm font-semibold text-white"
+              className="rounded-lg bg-black px-5 py-2.5 text-sm font-semibold text-white"
             >
               Browse articles →
             </Link>

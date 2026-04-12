@@ -5,7 +5,7 @@ import {
   createSubscription,
   activateSubscription,
   cancelSubscription,
-} from "@/lib/data";
+} from "@/lib/api";
 
 const COOKIE_NAME = "subscription-token";
 

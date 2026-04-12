@@ -154,7 +154,6 @@ export async function createSubscription() {
   return { token, ...(await (res.json() as Promise<SubscriptionResponse>)) };
 }
 
-// TODO: consider only returning what is needed for this function
 export async function getPublicationConfig() {
   "use cache";
 

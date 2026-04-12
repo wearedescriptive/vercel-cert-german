@@ -6,7 +6,7 @@ import { geistSans, geistMono } from "./fonts";
 
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { getPublicationConfig } from "@/lib/data";
+import { getPublicationConfig } from "@/lib/api";
 
 export async function generateMetadata() {
   const config = await getPublicationConfig();
