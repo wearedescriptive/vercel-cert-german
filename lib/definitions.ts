@@ -65,7 +65,7 @@ export type ArticleListResponse = {
 };
 
 export type ArticleResponse = {
-  data: Article;
+  data: Article | null;
   success: true;
 };
 

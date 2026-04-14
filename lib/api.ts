@@ -38,6 +38,8 @@ export async function getArticleById(id: string): Promise<ArticleResponse> {
   const res = await fetch(`${BASE_URL}/articles/${id}`, {
     headers: { ...bypassHeader },
   });
+
+  if (res.status === 404) return { data: null, success: true };
   if (!res.ok) throw new Error("Failed to get article details");
 
   return res.json();
