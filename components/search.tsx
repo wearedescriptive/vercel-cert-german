@@ -4,13 +4,11 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 import { Search as SearchIcon } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
-import { useSearchNavigation } from "./search-navigation";
 
 export function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { startTransition } = useSearchNavigation();
 
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
@@ -20,9 +18,7 @@ export function Search({ placeholder }: { placeholder: string }) {
     } else {
       params.delete("query");
     }
-    startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
-    });
+    replace(`${pathname}?${params.toString()}`);
   }, 300);
 
   return (

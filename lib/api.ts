@@ -10,11 +10,12 @@ import type {
 } from "./definitions";
 
 const BASE_URL = "https://vercel-daily-news-api.vercel.app/api";
-const BYPASS_TOKEN = process.env.BYPASS_TOKEN!;
+const BYPASS_TOKEN = process.env.BYPASS_TOKEN;
+if (!BYPASS_TOKEN) throw new Error("Missing BYPASS_TOKEN env variable");
 
 const bypassHeader = { "x-vercel-protection-bypass": BYPASS_TOKEN };
 
-export async function getFeaturedArticles() {
+export async function getFeaturedArticles(): Promise<ArticleListResponse> {
   "use cache";
 
   cacheLife("days");
@@ -25,10 +26,10 @@ export async function getFeaturedArticles() {
   });
   if (!res.ok) throw new Error("Failed to get featured articles");
 
-  return res.json() as Promise<ArticleListResponse>;
+  return res.json();
 }
 
-export async function getArticleById(id: string) {
+export async function getArticleById(id: string): Promise<ArticleResponse> {
   "use cache";
 
   cacheLife("days");
@@ -39,10 +40,10 @@ export async function getArticleById(id: string) {
   });
   if (!res.ok) throw new Error("Failed to get article details");
 
-  return res.json() as Promise<ArticleResponse>;
+  return res.json();
 }
 
-export async function getAllCategories() {
+export async function getAllCategories(): Promise<CategoryListResponse> {
   "use cache";
 
   cacheLife("days");
@@ -53,10 +54,12 @@ export async function getAllCategories() {
   });
   if (!res.ok) throw new Error("Failed to fetch categories");
 
-  return res.json() as Promise<CategoryListResponse>;
+  return res.json();
 }
 
-export async function getTrendingArticles(exclude?: string) {
+export async function getTrendingArticles(
+  exclude?: string,
+): Promise<ArticleListResponse> {
   "use cache";
 
   cacheLife("days");
@@ -72,10 +75,10 @@ export async function getTrendingArticles(exclude?: string) {
   );
   if (!res.ok) throw new Error("Failed to fetch trending articles");
 
-  return res.json() as Promise<ArticleListResponse>;
+  return res.json();
 }
 
-export async function getBreakingNews() {
+export async function getBreakingNews(): Promise<BreakingNewsResponse> {
   "use cache";
 
   cacheLife("minutes");
@@ -86,7 +89,7 @@ export async function getBreakingNews() {
   });
   if (!res.ok) throw new Error("Failed to fetch breaking news");
 
-  return res.json() as Promise<BreakingNewsResponse>;
+  return res.json();
 }
 
 export async function searchArticles(params: {
@@ -94,56 +97,60 @@ export async function searchArticles(params: {
   category?: string;
   page?: number;
   limit?: number;
-}) {
-  "use cache";
-
+}): Promise<ArticleListResponse> {
   const qs = new URLSearchParams();
   if (params.search) qs.set("search", params.search);
   if (params.category) qs.set("category", params.category);
   if (params.page) qs.set("page", String(params.page));
   qs.set("limit", String(params.limit ?? 6));
 
-  cacheLife("days");
-  cacheTag("search-articles", `query-${qs.toString()}`);
-
   const res = await fetch(`${BASE_URL}/articles?${qs.toString()}`, {
     headers: { ...bypassHeader },
   });
   if (!res.ok) throw new Error("Failed to search articles");
 
-  return res.json() as Promise<ArticleListResponse>;
+  return res.json();
 }
 
-export async function getSubscription(token: string) {
+export async function getSubscription(
+  token: string,
+): Promise<SubscriptionResponse | null> {
   const res = await fetch(`${BASE_URL}/subscription`, {
     headers: { ...bypassHeader, "x-subscription-token": token },
   });
-  if (!res.ok) return null;
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Failed to fetch subscription");
 
-  return res.json() as Promise<SubscriptionResponse>;
+  return res.json();
 }
 
-export async function activateSubscription(token: string) {
+export async function activateSubscription(
+  token: string,
+): Promise<SubscriptionResponse> {
   const res = await fetch(`${BASE_URL}/subscription`, {
     method: "POST",
     headers: { ...bypassHeader, "x-subscription-token": token },
   });
   if (!res.ok) throw new Error("Failed to activate subscription");
 
-  return res.json() as Promise<SubscriptionResponse>;
+  return res.json();
 }
 
-export async function cancelSubscription(token: string) {
+export async function cancelSubscription(
+  token: string,
+): Promise<SubscriptionResponse> {
   const res = await fetch(`${BASE_URL}/subscription`, {
     method: "DELETE",
     headers: { ...bypassHeader, "x-subscription-token": token },
   });
   if (!res.ok) throw new Error("Failed to cancel subscription");
 
-  return res.json() as Promise<SubscriptionResponse>;
+  return res.json();
 }
 
-export async function createSubscription() {
+export async function createSubscription(): Promise<
+  SubscriptionResponse & { token: string | null }
+> {
   const res = await fetch(`${BASE_URL}/subscription/create`, {
     method: "POST",
     headers: { ...bypassHeader },
@@ -151,10 +158,10 @@ export async function createSubscription() {
   if (!res.ok) throw new Error("Failed to create subscription");
 
   const token = res.headers.get("x-subscription-token");
-  return { token, ...(await (res.json() as Promise<SubscriptionResponse>)) };
+  return { token, ...(await res.json()) };
 }
 
-export async function getPublicationConfig() {
+export async function getPublicationConfig(): Promise<PublicationConfigResponse> {
   "use cache";
 
   cacheLife("days");
@@ -165,5 +172,5 @@ export async function getPublicationConfig() {
   });
   if (!res.ok) throw new Error("Failed to fetch publication config");
 
-  return res.json() as Promise<PublicationConfigResponse>;
+  return res.json();
 }

@@ -3,13 +3,11 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 import { Category } from "@/lib/definitions";
-import { useSearchNavigation } from "./search-navigation";
 
 export function CategoryFilter({ categories }: { categories: Category[] }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { startTransition } = useSearchNavigation();
 
   const handleSelect = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -19,9 +17,7 @@ export function CategoryFilter({ categories }: { categories: Category[] }) {
     } else {
       params.delete("category");
     }
-    startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
-    });
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
