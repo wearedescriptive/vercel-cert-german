@@ -6,6 +6,5 @@ export async function SubscribeButtonLoader() {
   const token = (await cookies()).get("subscription-token")?.value;
   const subscription = token ? await getSubscription(token) : null;
   const isSubscribed = subscription?.data.status === "active";
-
   return <SubscribeButton isSubscribed={isSubscribed} />;
 }

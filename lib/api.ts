@@ -92,6 +92,27 @@ export async function getBreakingNews(): Promise<BreakingNewsResponse> {
   return res.json();
 }
 
+export async function getLatestArticles(
+  page: number = 1,
+  limit = 6,
+): Promise<ArticleListResponse> {
+  "use cache";
+
+  cacheLife("days");
+  cacheTag("latest-articles");
+
+  const qs = new URLSearchParams();
+  qs.set("page", page.toString());
+  qs.set("limit", limit.toString());
+
+  const res = await fetch(`${BASE_URL}/articles?${qs.toString()}`, {
+    headers: { ...bypassHeader },
+  });
+  if (!res.ok) throw new Error("Failed to fetch latest artists");
+
+  return res.json();
+}
+
 export async function searchArticles(params: {
   search?: string;
   category?: string;
