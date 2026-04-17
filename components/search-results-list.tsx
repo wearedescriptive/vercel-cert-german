@@ -28,7 +28,7 @@ export async function SearchResultsList({
     return (
       <div className="mt-16 text-center">
         <p className="text-lg font-medium text-neutral-600">No results found</p>
-        <p className="mt-2 text-sm text-neutral-400">
+        <p className="mt-2 text-sm text-neutral-500">
           Try a different search term or category.
         </p>
       </div>

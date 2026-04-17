@@ -11,7 +11,7 @@ export async function TrendingArticles({
   const { data: articles } = await getTrendingArticles(id);
   return (
     <div>
-      <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-neutral-400">
+      <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-neutral-500">
         Trending
       </h2>
       <div className="flex flex-col gap-6">
@@ -21,7 +21,7 @@ export async function TrendingArticles({
             href={`/articles/${article.id}`}
             className="group"
           >
-            <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
+            <p className="text-xs font-bold uppercase tracking-widest text-neutral-500">
               {article.category}
             </p>
             <h3 className="mt-1 font-bold text-neutral-900 group-hover:underline">

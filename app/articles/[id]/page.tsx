@@ -66,7 +66,7 @@ async function CachedBody({
 
   return (
     <article>
-      <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
+      <p className="text-xs font-bold uppercase tracking-widest text-neutral-500">
         {article.category}
       </p>
       <h1 className="mt-2 text-3xl font-bold leading-[1.1] tracking-[-0.02em] text-neutral-900 md:text-4xl">
@@ -90,7 +90,7 @@ async function CachedBody({
           <p className="font-semibold text-neutral-800">
             {article.author.name}
           </p>
-          <p className="text-neutral-400">
+          <p className="text-neutral-500">
             {new Date(article.publishedAt).toLocaleDateString("en-US", {
               month: "long",
               day: "numeric",

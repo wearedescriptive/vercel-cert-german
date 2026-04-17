@@ -43,7 +43,10 @@ export async function FeaturedArticles() {
             </div>
             <div className="flex flex-1 flex-col justify-center gap-2 p-5">
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-[0.65rem] uppercase tracking-widest">
+                <Badge
+                  variant="secondary"
+                  className="text-[0.65rem] uppercase tracking-widest"
+                >
                   {article.category}
                 </Badge>
                 <span className="text-xs text-muted-foreground">

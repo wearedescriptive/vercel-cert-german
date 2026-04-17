@@ -36,11 +36,11 @@ export default function ArticleErrorBoundary({
           Something went wrong while loading the article. Please try again.
         </p>
         {error.digest && (
-          <p className="mb-2 font-mono text-xs text-neutral-400">
+          <p className="mb-2 font-mono text-xs text-neutral-500">
             Error ID: {error.digest}
           </p>
         )}
-        <p className="mb-6 font-mono text-xs text-neutral-400">
+        <p className="mb-6 font-mono text-xs text-neutral-500">
           Correlation ID: {correlationId}
         </p>
         <div className="flex justify-center gap-3">
