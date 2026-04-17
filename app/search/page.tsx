@@ -10,13 +10,20 @@ import {
   CategoryFilterSkeleton,
 } from "@/components/skeletons";
 import { SearchResults } from "@/components/search-results";
+import { cacheLife, cacheTag } from "next/cache";
 
 export const metadata: Metadata = {
   title: "Search",
 };
 
 async function CategoryFilterSection() {
+  "use cache";
+
+  cacheLife("minutes");
+  cacheTag("search-results");
+
   const { data: categories } = await getAllCategories();
+
   return <CategoryFilter categories={categories} />;
 }
 

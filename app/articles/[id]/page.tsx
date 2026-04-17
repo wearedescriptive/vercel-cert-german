@@ -53,9 +53,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function ArticleContent({ params }: Props) {
-  const [{ id }, headerStore] = await Promise.all([params, headers()]);
-  const isSubscribed = headerStore.get("x-subscription-status") === "active";
+async function CachedBody({
+  id,
+  isSubscribed,
+}: {
+  id: string;
+  isSubscribed: boolean;
+}) {
   const { data: article } = await getArticleById(id);
 
   if (!article) notFound();
@@ -120,6 +124,13 @@ async function ArticleContent({ params }: Props) {
       )}
     </article>
   );
+}
+
+async function ArticleContent({ params }: Props) {
+  const [{ id }, headerStore] = await Promise.all([params, headers()]);
+  const isSubscribed = headerStore.get("x-subscription-status") === "active";
+
+  return <CachedBody id={id} isSubscribed={isSubscribed} />;
 }
 
 export default async function ArticlePage({ params }: Props) {
