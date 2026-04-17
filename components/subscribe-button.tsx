@@ -46,13 +46,15 @@ export function SubscribeButton({ isSubscribed, className }: Props) {
     return (
       <div className="ml-auto flex items-center gap-2">
         <Badge variant="secondary">Subscribed</Badge>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={(v) => !isPending && setOpen(v)}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm">
               Unsubscribe
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent
+            onInteractOutside={(e) => isPending && e.preventDefault()}
+          >
             <DialogHeader>
               <DialogTitle>Unsubscribe from Vercel Daily</DialogTitle>
               <DialogDescription>
@@ -62,7 +64,9 @@ export function SubscribeButton({ isSubscribed, className }: Props) {
             </DialogHeader>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" disabled={isPending}>
+                  Cancel
+                </Button>
               </DialogClose>
               <Button
                 variant="destructive"
@@ -79,13 +83,17 @@ export function SubscribeButton({ isSubscribed, className }: Props) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(v) => !isPending && setOpen(v)}>
       <DialogTrigger asChild>
-        <Button className={className ?? "ml-auto"} size={className ? "default" : "sm"}>
+        <Button
+          className={className ?? "ml-auto"}
+          size={className ? "default" : "sm"}
+          disabled={isPending}
+        >
           Subscribe
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent onInteractOutside={(e) => isPending && e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Subscribe to Vercel Daily</DialogTitle>
           <DialogDescription>
@@ -95,7 +103,9 @@ export function SubscribeButton({ isSubscribed, className }: Props) {
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Maybe later</Button>
+            <Button variant="outline" disabled={isPending}>
+              Maybe later
+            </Button>
           </DialogClose>
           <Button onClick={handleSubscribe} disabled={isPending}>
             {isPending ? "Subscribing…" : "Subscribe — it's free"}

@@ -48,7 +48,7 @@ export async function getArticleById(id: string): Promise<ArticleResponse> {
 export async function getAllCategories(): Promise<CategoryListResponse> {
   "use cache";
 
-  cacheLife("days");
+  cacheLife("weeks");
   cacheTag("categories");
 
   const res = await fetch(`${BASE_URL}/categories`, {
@@ -184,7 +184,7 @@ export async function createSubscription(): Promise<
 export async function getPublicationConfig(): Promise<PublicationConfigResponse> {
   "use cache";
 
-  cacheLife("days");
+  cacheLife("weeks");
   cacheTag("publication-config");
 
   const res = await fetch(`${BASE_URL}/publication/config`, {

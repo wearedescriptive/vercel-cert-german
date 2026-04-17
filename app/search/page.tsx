@@ -20,7 +20,7 @@ async function CategoryFilterSection() {
   "use cache";
 
   cacheLife("minutes");
-  cacheTag("search-results");
+  cacheTag("categories");
 
   const { data: categories } = await getAllCategories();
 
