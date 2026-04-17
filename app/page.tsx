@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { BreakingNews } from "@/components/breaking-news";
 import { FeaturedArticles } from "@/components/featured-articles";
 import {
@@ -15,13 +16,13 @@ export default async function Home() {
         <BreakingNews />
       </Suspense>
 
-      <main className="mx-auto max-w-5xl items-center gap-24 px-4 py-18 flex flex-col">
-        <div className="gap-12 flex flex-col">
-          <hgroup className="flex flex-col gap-6">
+      <main className="mx-auto max-w-5xl items-center gap-28 px-6 py-24 flex flex-col">
+        <div className="gap-14 flex flex-col">
+          <hgroup className="flex flex-col gap-7">
             <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
               The Vercel Daily
             </p>
-            <h1 className="text-5xl font-bold leading-tight tracking-tight">
+            <h1 className="text-5xl font-bold leading-[1.08] tracking-[-0.03em] md:text-6xl">
               News and insights for modern web developers.
             </h1>
             <p className="max-w-md text-lg text-neutral-500">
@@ -31,12 +32,9 @@ export default async function Home() {
           </hgroup>
 
           <div>
-            <Link
-              href="/search"
-              className="rounded-lg bg-black px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              Browse articles →
-            </Link>
+            <Button asChild size="lg" className="h-11 px-6">
+              <Link href="/search">Browse articles &rarr;</Link>
+            </Button>
           </div>
         </div>
 

@@ -4,7 +4,7 @@ const shimmer =
 export function BreakingNewsSkeleton() {
   return (
     <div className="border-b bg-black">
-      <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2">
+      <div className="mx-auto flex max-w-5xl items-center gap-3 px-6 py-3">
         <div className="h-5 w-16 shrink-0 rounded bg-neutral-700" />
         <div className="h-4 w-72 rounded bg-neutral-700" />
       </div>
@@ -72,51 +72,43 @@ export function TrendingArticlesSkeleton() {
 export function SearchInputSkeleton() {
   return (
     <div className="relative flex flex-1 shrink-0">
-      <div className="h-[38px] w-full rounded-lg border border-gray-200 bg-neutral-100" />
+      <div className="h-[46px] w-full rounded-lg border border-neutral-200 bg-neutral-100" />
     </div>
   );
 }
 
 export function CategoryFilterSkeleton() {
-  return <div className="h-[42px] w-40 rounded-lg border bg-neutral-100" />;
+  return <div className="h-[46px] w-40 rounded-lg border border-neutral-200 bg-neutral-100" />;
 }
 
-function SearchResultCardSkeleton() {
+function HorizontalCardSkeleton() {
   return (
-    <div>
+    <div className="flex flex-col overflow-hidden rounded-xl border border-neutral-200 sm:flex-row">
       <div
-        className={`${shimmer} relative aspect-4/3 overflow-hidden rounded-lg bg-neutral-100`}
+        className={`${shimmer} relative aspect-video w-full shrink-0 overflow-hidden bg-neutral-100 sm:aspect-auto sm:w-48 md:w-56`}
       />
-      <div className="mt-3 h-3 w-20 rounded bg-neutral-200" />
-      <div className="mt-2 h-5 w-full rounded bg-neutral-200" />
-      <div className="mt-2 h-4 w-3/4 rounded bg-neutral-100" />
+      <div className="flex flex-1 flex-col justify-center gap-2.5 p-5">
+        <div className="flex items-center gap-2">
+          <div className="h-5 w-16 rounded-md bg-neutral-200" />
+          <div className="h-3 w-12 rounded bg-neutral-100" />
+        </div>
+        <div className="h-5 w-full rounded bg-neutral-200" />
+        <div className="h-4 w-5/6 rounded bg-neutral-100" />
+        <div className="h-3 w-20 rounded bg-neutral-100" />
+      </div>
     </div>
   );
 }
 
 export function SearchResultsSkeleton() {
   return (
-    <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <SearchResultCardSkeleton />
-      <SearchResultCardSkeleton />
-      <SearchResultCardSkeleton />
-      <SearchResultCardSkeleton />
-      <SearchResultCardSkeleton />
-      <SearchResultCardSkeleton />
-    </div>
-  );
-}
-
-function FeaturedArticleCardSkeleton() {
-  return (
-    <div>
-      <div
-        className={`${shimmer} relative aspect-4/3 overflow-hidden rounded-lg bg-neutral-100`}
-      />
-      <div className="mt-3 h-3 w-32 rounded bg-neutral-200" />
-      <div className="mt-2 h-5 w-full rounded bg-neutral-200" />
-      <div className="mt-2 h-4 w-full rounded bg-neutral-100" />
-      <div className="mt-1 h-4 w-2/3 rounded bg-neutral-100" />
+    <div className="grid gap-5 sm:grid-cols-2">
+      <HorizontalCardSkeleton />
+      <HorizontalCardSkeleton />
+      <HorizontalCardSkeleton />
+      <HorizontalCardSkeleton />
+      <HorizontalCardSkeleton />
+      <HorizontalCardSkeleton />
     </div>
   );
 }
@@ -124,7 +116,7 @@ function FeaturedArticleCardSkeleton() {
 export function FeaturedArticlesSkeleton() {
   return (
     <section className="w-full">
-      <div className="mb-6 flex items-end justify-between">
+      <div className="mb-8 flex items-end justify-between">
         <div>
           <div className="h-7 w-32 rounded bg-neutral-200" />
           <div className="mt-1 h-4 w-52 rounded bg-neutral-100" />
@@ -132,13 +124,13 @@ export function FeaturedArticlesSkeleton() {
         <div className="h-4 w-14 rounded bg-neutral-100" />
       </div>
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <FeaturedArticleCardSkeleton />
-        <FeaturedArticleCardSkeleton />
-        <FeaturedArticleCardSkeleton />
-        <FeaturedArticleCardSkeleton />
-        <FeaturedArticleCardSkeleton />
-        <FeaturedArticleCardSkeleton />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <HorizontalCardSkeleton />
+        <HorizontalCardSkeleton />
+        <HorizontalCardSkeleton />
+        <HorizontalCardSkeleton />
+        <HorizontalCardSkeleton />
+        <HorizontalCardSkeleton />
       </div>
     </section>
   );

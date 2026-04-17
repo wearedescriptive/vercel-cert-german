@@ -11,7 +11,7 @@ export async function SearchResults(props: {
   const category = searchParams?.category || "";
   const currentPage = Number(searchParams?.page) || 1;
   const key = query + currentPage + category;
-  const isSearching = query || category;
+  const isSearching = query || category || currentPage > 1;
 
   if (!isSearching) {
     return (

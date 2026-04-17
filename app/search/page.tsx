@@ -33,10 +33,10 @@ export default function SearchPage({
   searchParams: Promise<{ query?: string; category?: string; page?: string }>;
 }) {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12 gap-6 flex flex-col">
+    <main className="mx-auto max-w-5xl px-6 py-16 gap-8 flex flex-col">
       <hgroup>
-        <h1 className="text-3xl font-bold">Search articles</h1>
-        <p className="mt-1 text-sm text-neutral-500">
+        <h1 className="text-3xl font-bold tracking-tight">Search articles</h1>
+        <p className="mt-2 text-sm text-neutral-500">
           Browse all articles or search by keyword and category.
         </p>
       </hgroup>

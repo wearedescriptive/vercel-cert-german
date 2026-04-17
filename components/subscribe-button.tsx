@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { subscribe, unsubscribe } from "@/app/actions";
 import { Button } from "@/components/ui/button";
@@ -18,9 +18,10 @@ import {
 
 type Props = {
   isSubscribed: boolean;
+  className?: string;
 };
 
-export function SubscribeButton({ isSubscribed }: Props) {
+export function SubscribeButton({ isSubscribed, className }: Props) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -80,7 +81,7 @@ export function SubscribeButton({ isSubscribed }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="ml-auto" size="sm">
+        <Button className={className ?? "ml-auto"} size={className ? "default" : "sm"}>
           Subscribe
         </Button>
       </DialogTrigger>

@@ -69,11 +69,13 @@ async function CachedBody({
       <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
         {article.category}
       </p>
-      <h1 className="mt-2 text-3xl font-bold leading-tight tracking-tight text-neutral-900 md:text-4xl">
+      <h1 className="mt-2 text-3xl font-bold leading-[1.1] tracking-[-0.02em] text-neutral-900 md:text-4xl">
         {article.title}
       </h1>
-      <p className="mt-3 text-lg text-neutral-500">{article.excerpt}</p>
-      <div className="mt-4 flex items-center gap-3 border-b pb-6">
+      <p className="mt-3 text-lg leading-relaxed text-neutral-500">
+        {article.excerpt}
+      </p>
+      <div className="mt-6 flex items-center gap-3 border-b pb-8">
         {article.author.avatar && (
           <Image
             src={article.author.avatar}
@@ -97,7 +99,7 @@ async function CachedBody({
           </p>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-8">
         <Hero image={{ src: article.image, alt: article.title }} />
       </div>
 
@@ -107,16 +109,19 @@ async function CachedBody({
         <>
           <Body content={article.content.slice(0, 1)} />
           <div className="relative mt-8">
-            <div className="pointer-events-none absolute -top-16 left-0 right-0 h-16 bg-linear-to-b from-transparent to-white" />
-            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-8 py-10 text-center">
-              <p className="text-lg font-semibold text-neutral-900">
+            <div className="pointer-events-none absolute -top-20 left-0 right-0 h-20 bg-linear-to-b from-transparent to-white" />
+            <div className="rounded-2xl bg-neutral-950 px-10 py-14 text-center">
+              <p className="text-xl font-semibold tracking-tight text-white">
                 Read the full article
               </p>
-              <p className="mt-1 text-sm text-neutral-500">
+              <p className="mt-2 text-sm text-neutral-400">
                 Subscribe for free to unlock every article on Vercel Daily.
               </p>
-              <div className="mt-5 flex justify-center">
-                <SubscribeButton isSubscribed={false} />
+              <div className="mt-6 flex justify-center">
+                <SubscribeButton
+                  isSubscribed={false}
+                  className="bg-white text-black"
+                />
               </div>
             </div>
           </div>
@@ -136,12 +141,12 @@ async function ArticleContent({ params }: Props) {
 export default async function ArticlePage({ params }: Props) {
   return (
     <main className="mx-auto max-w-4xl p-8">
-      <div className="mx-auto max-w-5xl px-4 py-10">
+      <div className="mx-auto max-w-5xl px-4 py-14">
         <Suspense fallback={<ArticleContentSkeleton />}>
           <ArticleContent params={params} />
         </Suspense>
 
-        <div className="mt-12 border-t pt-10">
+        <div className="mt-16 border-t pt-12">
           <Suspense fallback={<TrendingArticlesSkeleton />}>
             <TrendingArticles params={params} />
           </Suspense>

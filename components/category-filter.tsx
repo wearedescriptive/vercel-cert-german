@@ -24,7 +24,7 @@ export function CategoryFilter({ categories }: { categories: Category[] }) {
     <select
       value={searchParams.get("category") ?? ""}
       onChange={(e) => handleSelect(e.target.value)}
-      className="rounded-lg border bg-white px-4 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-neutral-300"
+      className="rounded-lg border border-input bg-background px-4 py-3 pr-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <option value="">All categories</option>
       {categories.map((cat) => (

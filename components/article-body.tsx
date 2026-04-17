@@ -4,7 +4,7 @@ import { ContentBlock } from "@/lib/definitions";
 
 export function ArticleBody({ content }: { content: ContentBlock[] }) {
   return (
-    <div className="mt-8 space-y-4 text-neutral-800 leading-relaxed">
+    <div className="mt-8 space-y-5 text-[1.0625rem] leading-[1.75] text-neutral-800">
       {content.map((block) => {
         switch (block.type) {
           case "paragraph":
@@ -17,14 +17,14 @@ export function ArticleBody({ content }: { content: ContentBlock[] }) {
             return block.level === 2 ? (
               <h2
                 key={block.text}
-                className="mt-8 text-2xl font-bold text-neutral-900"
+                className="mt-10 text-2xl font-bold tracking-tight text-neutral-900"
               >
                 {block.text}
               </h2>
             ) : (
               <h3
                 key={block.text}
-                className="mt-6 text-xl font-bold text-neutral-900"
+                className="mt-8 text-xl font-semibold tracking-tight text-neutral-900"
               >
                 {block.text}
               </h3>
@@ -33,7 +33,7 @@ export function ArticleBody({ content }: { content: ContentBlock[] }) {
             return (
               <blockquote
                 key={block.text}
-                className="border-l-4 border-neutral-200 pl-4 italic text-neutral-500"
+                className="border-l-2 border-neutral-300 pl-5 italic text-neutral-600"
               >
                 {block.text}
               </blockquote>
