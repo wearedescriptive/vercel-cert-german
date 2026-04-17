@@ -16,7 +16,7 @@ export async function SearchResults(props: {
   if (!isSearching) {
     return (
       <Suspense key="latest-articles" fallback={<SearchResultsSkeleton />}>
-        <LatestArticles currentPage={currentPage} />
+        <LatestArticles />
       </Suspense>
     );
   }

@@ -22,7 +22,7 @@ export function CategoryFilter({ categories }: { categories: Category[] }) {
 
   return (
     <select
-      defaultValue={searchParams.get("category") ?? ""}
+      value={searchParams.get("category") ?? ""}
       onChange={(e) => handleSelect(e.target.value)}
       className="rounded-lg border bg-white px-4 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-neutral-300"
     >

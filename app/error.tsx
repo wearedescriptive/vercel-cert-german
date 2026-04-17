@@ -1,11 +1,11 @@
 "use client";
 
-// Root error boundary - catches all runtime errors not handled by nested boundaries
-// Must be a Client Component: error boundaries use React state internally
+import { useEffect, useMemo } from "react";
 
-import { useEffect } from "react";
+function generateCorrelationId(): string {
+  return `err-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
-// Rename to ErrorBoundary to avoid shadowing global Error
 export default function ErrorBoundary({
   error,
   reset,
@@ -13,10 +13,16 @@ export default function ErrorBoundary({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const correlationId = useMemo(() => generateCorrelationId(), []);
+
   useEffect(() => {
-    // biome-ignore lint/suspicious/noConsole: Error logging is intentional for debugging
-    console.error("Root error boundary caught:", error);
-  }, [error]);
+    console.error("Root error boundary caught:", {
+      correlationId,
+      digest: error.digest,
+      message: error.message,
+      timestamp: new Date().toISOString(),
+    });
+  }, [error, correlationId]);
 
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center">
@@ -27,12 +33,14 @@ export default function ErrorBoundary({
         <p className="mb-4 text-red-600">
           {error.message || "An unexpected error occurred"}
         </p>
-        {/* digest is Next.js's auto-generated error ID for production - a unique hash that correlates client errors with server logs */}
         {error.digest && (
           <p className="mb-4 font-mono text-red-400 text-xs">
             Error ID: {error.digest}
           </p>
         )}
+        <p className="mb-4 font-mono text-red-400 text-xs">
+          Correlation ID: {correlationId}
+        </p>
         <button
           type="button"
           onClick={reset}

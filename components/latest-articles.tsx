@@ -6,8 +6,8 @@ import { Pagination } from "./pagination";
 
 import { getLatestArticles } from "@/lib/api";
 
-export async function LatestArticles({ currentPage }: { currentPage: number }) {
-  const { data: articles, meta } = await getLatestArticles(currentPage, 6);
+export async function LatestArticles() {
+  const { data: articles, meta } = await getLatestArticles();
   const totalPages = meta.pagination.totalPages || 1;
   return (
     <>

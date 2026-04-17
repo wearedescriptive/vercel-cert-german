@@ -94,18 +94,15 @@ export async function getBreakingNews(): Promise<BreakingNewsResponse> {
   return res.json();
 }
 
-export async function getLatestArticles(
-  page: number = 1,
-  limit = 6,
-): Promise<ArticleListResponse> {
+export async function getLatestArticles(): Promise<ArticleListResponse> {
   "use cache";
 
   cacheLife("days");
   cacheTag("latest-articles");
 
   const qs = new URLSearchParams();
-  qs.set("page", page.toString());
-  qs.set("limit", limit.toString());
+  qs.set("page", "1");
+  qs.set("limit", "6");
 
   const res = await fetch(`${BASE_URL}/articles?${qs.toString()}`, {
     headers: { ...bypassHeader },
