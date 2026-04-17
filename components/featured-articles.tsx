@@ -26,6 +26,7 @@ export async function FeaturedArticles() {
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((article) => (
           <Link
+            prefetch
             key={article.id}
             href={`/articles/${article.id}`}
             className="group overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
