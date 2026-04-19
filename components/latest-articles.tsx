@@ -31,7 +31,10 @@ export async function LatestArticles() {
             </div>
             <div className="flex flex-1 flex-col justify-center gap-2 p-5">
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-[0.65rem] uppercase tracking-widest">
+                <Badge
+                  variant="secondary"
+                  className="text-[0.65rem] uppercase tracking-widest"
+                >
                   {article.category}
                 </Badge>
                 <span className="text-xs text-muted-foreground">
@@ -41,9 +44,9 @@ export async function LatestArticles() {
                   })}
                 </span>
               </div>
-              <h3 className="text-base font-semibold leading-snug tracking-tight text-neutral-950 transition-colors group-hover:text-neutral-600">
+              <h2 className="text-base font-semibold leading-snug tracking-tight text-neutral-950 transition-colors group-hover:text-neutral-600">
                 {article.title}
-              </h3>
+              </h2>
               <p className="line-clamp-2 text-sm leading-relaxed text-neutral-500">
                 {article.excerpt}
               </p>
@@ -55,7 +58,7 @@ export async function LatestArticles() {
           </Link>
         ))}
       </div>
-      <div className="mt-8 flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
     </>

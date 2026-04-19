@@ -12,9 +12,7 @@ export async function BreakingNews() {
     <div className="border-b border-neutral-800 bg-black text-white">
       <div className="mx-auto flex max-w-5xl items-center gap-3 px-6 py-3 text-sm">
         {urgent && <TriangleAlert className="size-4 shrink-0" />}
-        <span
-          className="shrink-0 rounded-md bg-white px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-black"
-        >
+        <span className="shrink-0 rounded-md bg-white px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-black">
           Breaking
         </span>
         <Link

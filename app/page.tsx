@@ -16,8 +16,8 @@ export default async function Home() {
         <BreakingNews />
       </Suspense>
 
-      <main className="mx-auto max-w-5xl items-center gap-28 px-6 py-24 flex flex-col">
-        <div className="gap-14 flex flex-col">
+      <main className="mx-auto max-w-5xl items-center gap-20 px-6 py-16 pb-10 flex flex-col">
+        <div className="gap-8 flex flex-col">
           <hgroup className="flex flex-col gap-7">
             <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500">
               The Vercel Daily

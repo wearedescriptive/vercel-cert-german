@@ -71,14 +71,16 @@ export function TrendingArticlesSkeleton() {
 
 export function SearchInputSkeleton() {
   return (
-    <div className="relative flex flex-1 shrink-0">
+    <div className="w-full">
       <div className="h-[46px] w-full rounded-lg border border-neutral-200 bg-neutral-100" />
     </div>
   );
 }
 
 export function CategoryFilterSkeleton() {
-  return <div className="h-[46px] w-40 rounded-lg border border-neutral-200 bg-neutral-100" />;
+  return (
+    <div className="h-[46px] w-full sm:w-40 rounded-lg border border-neutral-200 bg-neutral-100" />
+  );
 }
 
 function HorizontalCardSkeleton() {
