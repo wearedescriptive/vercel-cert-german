@@ -62,15 +62,6 @@ export async function getAllCategories(): Promise<CategoryListResponse> {
 export async function getTrendingArticles(
   exclude?: string,
 ): Promise<ArticleListResponse> {
-  "use cache";
-
-  cacheLife("days");
-  if (exclude) {
-    cacheTag("trending-articles", `trending-articles-exluding-${exclude}`);
-  } else {
-    cacheTag("trending-articles");
-  }
-
   const res = await fetch(
     `${BASE_URL}/articles/trending${exclude ? `?exclude=${exclude}` : ""}`,
     { headers: { ...bypassHeader } },

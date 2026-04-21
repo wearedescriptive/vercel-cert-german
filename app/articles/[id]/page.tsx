@@ -8,7 +8,6 @@ import { ArticleBody as Body } from "@/components/article-body";
 import { TrendingArticles } from "@/components/trending-articles";
 import { SubscribeButton } from "@/components/subscribe-button";
 import { getArticleById } from "@/lib/api";
-import { cacheLife, cacheTag } from "next/cache";
 import {
   ArticleContentSkeleton,
   TrendingArticlesSkeleton,
@@ -61,11 +60,6 @@ async function CachedBody({
   id: string;
   isSubscribed: boolean;
 }) {
-  "use cache";
-
-  cacheLife("days");
-  cacheTag("articles", `article-${id}`);
-
   const { data: article } = await getArticleById(id);
 
   if (!article) notFound();
