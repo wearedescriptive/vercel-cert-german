@@ -10,20 +10,21 @@ export async function SearchResults(props: {
   const query = searchParams?.query || "";
   const category = searchParams?.category || "";
   const currentPage = Number(searchParams?.page) || 1;
-  const key = query + currentPage + category;
   const isSearching = query || category || currentPage > 1;
-
-  if (!isSearching) {
-    return <LatestArticles />;
-  }
-
+  const key = isSearching
+    ? `search-${query}-${currentPage}-${category}`
+    : "latest";
   return (
     <Suspense key={key} fallback={<SearchResultsSkeleton />}>
-      <SearchResultsList
-        query={query}
-        currentPage={currentPage}
-        category={category}
-      />
+      {isSearching ? (
+        <SearchResultsList
+          query={query}
+          currentPage={currentPage}
+          category={category}
+        />
+      ) : (
+        <LatestArticles />
+      )}
     </Suspense>
   );
 }
