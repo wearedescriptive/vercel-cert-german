@@ -12,6 +12,15 @@ export function Search({ placeholder }: { placeholder: string }) {
   const { replace } = useRouter();
   const [showHint, setShowHint] = useState(false);
 
+  const query = searchParams.get("query") ?? "";
+  const [value, setValue] = useState(query);
+  const [prevQuery, setPrevQuery] = useState(query);
+
+  if (query !== prevQuery) {
+    setPrevQuery(query);
+    setValue(query);
+  }
+
   const showHintDebounced = useDebouncedCallback((show: boolean) => {
     setShowHint(show);
   }, 3000);
@@ -36,8 +45,10 @@ export function Search({ placeholder }: { placeholder: string }) {
         <input
           className="peer block w-full rounded-lg border border-input bg-background py-3 pl-11 pr-10 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           placeholder={placeholder}
+          value={value}
           onChange={(e) => {
             const value = e.target.value;
+            setValue(value);
 
             if (value.length > 0 && value.length < 3) {
               showHintDebounced(true);
@@ -48,7 +59,6 @@ export function Search({ placeholder }: { placeholder: string }) {
 
             handleSearch(value);
           }}
-          defaultValue={searchParams.get("query")?.toString()}
         />
         <SearchIcon className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground peer-focus:text-foreground" />
       </div>
