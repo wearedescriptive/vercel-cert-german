@@ -14,11 +14,7 @@ export async function SearchResults(props: {
   const isSearching = query || category || currentPage > 1;
 
   if (!isSearching) {
-    return (
-      <Suspense key="latest-articles" fallback={<SearchResultsSkeleton />}>
-        <LatestArticles />
-      </Suspense>
-    );
+    return <LatestArticles />;
   }
 
   return (

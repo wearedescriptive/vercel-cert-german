@@ -8,6 +8,7 @@ import { CategoryFilter } from "@/components/category-filter";
 import {
   SearchInputSkeleton,
   CategoryFilterSkeleton,
+  SearchResultsSkeleton,
 } from "@/components/skeletons";
 import { SearchResults } from "@/components/search-results";
 
@@ -45,7 +46,7 @@ export default function SearchPage({
         </Suspense>
       </div>
 
-      <Suspense>
+      <Suspense fallback={<SearchResultsSkeleton />}>
         <SearchResults searchParams={searchParams} />
       </Suspense>
     </main>
