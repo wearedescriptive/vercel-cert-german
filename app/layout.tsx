@@ -10,19 +10,25 @@ import { getPublicationConfig } from "@/lib/api";
 
 export async function generateMetadata() {
   const config = await getPublicationConfig();
-  const seo = config.data.seo;
+  const seo = config?.data.seo;
+
+  const titleTemplate = seo?.titleTemplate ?? "%s | Vercel Daily News";
+  const defaultTitle = seo?.defaultTitle ?? "Vercel Daily News";
+  const defaultDescription =
+    seo?.defaultDescription ??
+    "The latest news, tutorials, and insights for modern web developers. Covering web development, AI, cloud, and developer experience.";
 
   return {
     metadataBase: new URLSearchParams(process.env.VERCEL_URL)
       ? `https://${process.env.VERCEL_URL}`
       : `http://localhost:300`,
     title: {
-      template: seo.titleTemplate,
-      default: seo.defaultTitle,
+      template: titleTemplate,
+      default: defaultTitle,
     },
-    description: seo.defaultDescription,
+    description: defaultDescription,
     openGraph: {
-      siteName: seo.defaultTitle,
+      siteName: defaultTitle,
       locale: "en_US",
       type: "website",
     },

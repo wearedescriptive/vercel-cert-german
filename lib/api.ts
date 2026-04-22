@@ -172,16 +172,20 @@ export async function createSubscription(): Promise<
   return { token, ...(await res.json()) };
 }
 
-export async function getPublicationConfig(): Promise<PublicationConfigResponse> {
+export async function getPublicationConfig(): Promise<PublicationConfigResponse | null> {
   "use cache";
 
   cacheLife("weeks");
   cacheTag("publication-config");
 
-  const res = await fetch(`${BASE_URL}/publication/config`, {
-    headers: { ...bypassHeader },
-  });
-  if (!res.ok) throw new Error("Failed to fetch publication config");
+  try {
+    const res = await fetch(`${BASE_URL}/publication/config`, {
+      headers: { ...bypassHeader },
+    });
+    if (!res.ok) throw new Error("Failed to fetch publication config");
 
-  return res.json();
+    return res.json();
+  } catch {
+    return null;
+  }
 }
