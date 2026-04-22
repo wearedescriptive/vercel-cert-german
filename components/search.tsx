@@ -18,7 +18,9 @@ export function Search({ placeholder }: { placeholder: string }) {
 
   if (query !== prevQuery) {
     setPrevQuery(query);
-    setValue(query);
+    if (query) {
+      setValue(query);
+    }
   }
 
   const showHintDebounced = useDebouncedCallback((show: boolean) => {
