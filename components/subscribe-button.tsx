@@ -34,16 +34,33 @@ function SubscribeDialog({ className }: { className?: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   function handleSubscribe() {
+    setError(null);
     startTransition(async () => {
-      await subscribe();
-      router.refresh();
+      const result = await subscribe();
+      if (result.success) {
+        setOpen(false);
+        router.refresh();
+      } else {
+        setError(result.error);
+      }
     });
   }
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !isPending && setOpen(v)}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        if (!isPending) {
+          setOpen(v);
+          if (!v) {
+            setError(null);
+          }
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           className={className ?? "ml-auto"}
@@ -70,6 +87,7 @@ function SubscribeDialog({ className }: { className?: string }) {
                 subscription persists in this browser.
               </DialogDescription>
             </DialogHeader>
+            {error && <p className="text-sm text-red-600">{error}</p>}
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline">Maybe later</Button>
@@ -89,11 +107,18 @@ function UnsubscribeDialog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   function handleUnsubscribe() {
+    setError(null);
     startTransition(async () => {
-      await unsubscribe();
-      router.refresh();
+      const result = await unsubscribe();
+      if (result.success) {
+        setOpen(false);
+        router.refresh();
+      } else {
+        setError(result.error);
+      }
     });
   }
 
@@ -127,6 +152,7 @@ function UnsubscribeDialog() {
                   re-subscribe later.
                 </DialogDescription>
               </DialogHeader>
+              {error && <p className="text-sm text-red-600">{error}</p>}
               <DialogFooter>
                 <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
